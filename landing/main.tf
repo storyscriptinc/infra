@@ -50,3 +50,22 @@ resource "google_dns_record_set" "storyscript-wildcard" {
   managed_zone = "storyscript-com"
   rrdatas = [ "storyscript.io." ]
 }
+
+resource "google_dns_record_set" "storyscri-pt-apex" {
+  name = "storyscri.pt."
+  type = "A"
+  ttl = 300
+
+  managed_zone = "storyscri-pt"
+  rrdatas = [ "104.198.14.52" ]
+}
+
+
+resource "google_dns_record_set" "storyscri-pt-www" {
+  name = "www.storyscri.pt."
+  type = "CNAME"
+  ttl = 300
+
+  managed_zone = "storyscri-pt"
+  rrdatas = [ "storyscri.pt." ]
+}
