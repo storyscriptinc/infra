@@ -4,7 +4,7 @@ terraform {
   required_version = ">= 0.12.7"
   backend "gcs" {
     bucket = "storyscript-infra"
-    prefix  = "landing/state"
+    prefix = "landing/state"
   }
 }
 
@@ -14,9 +14,9 @@ terraform {
 
 provider "google" {
   credentials = var.credentials
-  version = "~> 2.9.0"
-  project = "storyscript"
-  region  = "us-east4"
+  version     = "~> 2.9.0"
+  project     = "storyscript"
+  region      = "us-east4"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -26,18 +26,18 @@ provider "google" {
 resource "google_dns_record_set" "storyscri-pt-apex" {
   name = "storyscri.pt."
   type = "A"
-  ttl = 300
+  ttl  = 300
 
   managed_zone = "storyscri-pt"
-  rrdatas = [ "104.198.14.52" ]
+  rrdatas      = ["104.198.14.52"]
 }
 
 
 resource "google_dns_record_set" "storyscri-pt-www" {
   name = "www.storyscri.pt."
   type = "CNAME"
-  ttl = 300
+  ttl  = 300
 
   managed_zone = "storyscri-pt"
-  rrdatas = [ "storyscri.pt." ]
+  rrdatas      = ["storyscri.pt."]
 }
