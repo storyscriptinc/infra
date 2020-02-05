@@ -67,10 +67,6 @@ resource "google_dns_managed_zone" "storyscript-io" {
   name     = "storyscript-primary"
   dns_name = "storyscript.io."
   project  = "storyscript"
-  labels = {
-    cluster_k8s_ip = "35.245.52.107"
-    netlify_dns_ip = "104.198.14.52"
-  }
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -83,7 +79,7 @@ resource "google_dns_record_set" "storyscript-io-www" {
   ttl  = 300
 
   managed_zone = google_dns_managed_zone.storyscript-io.name
-  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.netlify_dns_ip]
+  rrdatas      = ["104.198.14.52"]
 }
 
 resource "google_dns_record_set" "storyscript-io-apex" {
@@ -92,7 +88,7 @@ resource "google_dns_record_set" "storyscript-io-apex" {
   ttl  = 300
 
   managed_zone = google_dns_managed_zone.storyscript-io.name
-  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
+  rrdatas      = ["35.245.52.107"]
 }
 
 resource "google_dns_record_set" "storyscript-io-deploy" {
@@ -101,7 +97,7 @@ resource "google_dns_record_set" "storyscript-io-deploy" {
   ttl  = 300
 
   managed_zone = google_dns_managed_zone.storyscript-io.name
-  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
+  rrdatas      = ["35.245.52.107"]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
