@@ -32,7 +32,6 @@ resource "google_dns_record_set" "storyscri-pt-apex" {
   rrdatas      = ["104.198.14.52"]
 }
 
-
 resource "google_dns_record_set" "storyscri-pt-www" {
   name = "www.storyscri.pt."
   type = "CNAME"
@@ -40,4 +39,23 @@ resource "google_dns_record_set" "storyscri-pt-www" {
 
   managed_zone = "storyscri-pt"
   rrdatas      = ["storyscri.pt."]
+}
+
+resource "google_dns_record_set" "storyscript-apex" {
+  name = "storyscript.com."
+  type = "A"
+  ttl  = 300
+
+  managed_zone = "storyscript-com"
+  rrdatas      = ["104.198.14.52"]
+}
+
+
+resource "google_dns_record_set" "storyscript-www" {
+  name = "www.storyscript.com."
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = "storyscript-com"
+  rrdatas      = ["storyscript.com."]
 }
