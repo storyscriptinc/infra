@@ -64,7 +64,7 @@ resource "google_dns_record_set" "storyscript-www" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "google_dns_managed_zone" "storyscript-io" {
-  name     = "storyscript-primary"
+  name     = "storyscript-io"
   dns_name = "storyscript.io."
   project  = "storyscript"
 }
@@ -216,7 +216,7 @@ resource "google_dns_record_set" "storyscript-io-txt" {
   managed_zone = google_dns_managed_zone.storyscript-io.name
   rrdatas = [
     "google-site-verification=ItiTcYX7BAxzp92bSh-5rbR5v_dzBeF4bwRDGVzlfC0",
-    "v=spf1 include:mailgun.org ~all"
+    "\"v=spf1 include:mailgun.org ~all\""
   ]
 }
 
@@ -226,5 +226,5 @@ resource "google_dns_record_set" "storyscript-io-freshdesk-k1" {
   ttl  = 300
 
   managed_zone = google_dns_managed_zone.storyscript-io.name
-  rrdatas      = ["k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDD+mQUiQNZGU0IHBOlQIDpEMnIpx7iAs+bpMz6x9AVdIE3CGYaeRv8uNcwKegMqdjZk7vvilKdMrtjz86GPpLg+7h24kgAjQVdnE+ZRaWO7ZPGoc08nIqOUZBalPYfsYEpnAaWpd2Y0o8xwqVR0LDBqDiQL0mYnGBexSec5rOcdwIDAQAB"]
+  rrdatas      = ["\"k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDD+mQUiQNZGU0IHBOlQIDpEMnIpx7iAs+bpMz6x9AVdIE3CGYaeRv8uNcwKegMqdjZk7vvilKdMrtjz86GPpLg+7h24kgAjQVdnE+ZRaWO7ZPGoc08nIqOUZBalPYfsYEpnAaWpd2Y0o8xwqVR0LDBqDiQL0mYnGBexSec5rOcdwIDAQAB\""]
 }
