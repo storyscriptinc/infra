@@ -95,6 +95,24 @@ resource "google_dns_record_set" "storyscript-io-deploy" {
   rrdatas      = ["35.245.52.107"]
 }
 
+resource "google_dns_record_set" "storyscript-io-studio" {
+  name = "studio.storyscript.io."
+  type = "A"
+  ttl  = 300
+
+  managed_zone = "storyscript-primary"
+  rrdatas = ["104.198.14.52"]
+}
+
+resource "google_dns_record_set" "storyscript-io-components" {
+  name = "components.storyscript.io."
+  type = "A"
+  ttl  = 300
+
+  managed_zone = "storyscript-primary"
+  rrdatas = ["104.198.14.52"]
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # STORYSCRIPT-IO | CNAME
 # ---------------------------------------------------------------------------------------------------------------------
@@ -142,15 +160,6 @@ resource "google_dns_record_set" "storyscript-io-mailgun" {
 
   managed_zone = "storyscript-primary"
   rrdatas      = ["mailgun.org."]
-}
-
-resource "google_dns_record_set" "storyscript-io-studio" {
-  name = "studio.storyscript.io."
-  type = "CNAME"
-  ttl  = 300
-
-  managed_zone = "storyscript-primary"
-  rrdatas = ["studio.storyscript.com."]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
