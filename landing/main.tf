@@ -91,6 +91,69 @@ resource "google_dns_record_set" "storyscript-io-apex" {
   rrdatas      = ["35.245.52.107"]
 }
 
+resource "google_dns_record_set" "storyscript-io-logs" {
+  name = "logs.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
+}
+
+resource "google_dns_record_set" "storyscript-io-metabase" {
+  name = "metabase.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
+}
+
+resource "google_dns_record_set" "storyscript-io-openapiwatcher" {
+  name = "openapiwatcher.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
+}
+
+resource "google_dns_record_set" "storyscript-io-prometheus" {
+  name = "prometheus.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
+}
+
+resource "google_dns_record_set" "storyscript-io-sync" {
+  name = "sync.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
+}
+
+resource "google_dns_record_set" "storyscript-io-api" {
+  name = "api.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
+}
+
+resource "google_dns_record_set" "storyscript-io-api-dashboard" {
+  name = "api-dashboard.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
+}
+
 resource "google_dns_record_set" "storyscript-io-deploy" {
   name = "deploy.${google_dns_managed_zone.storyscript-io.dns_name}"
   type = "A"
@@ -98,6 +161,24 @@ resource "google_dns_record_set" "storyscript-io-deploy" {
 
   managed_zone = google_dns_managed_zone.storyscript-io.name
   rrdatas      = ["35.245.52.107"]
+}
+
+resource "google_dns_record_set" "storyscript-io-grafana" {
+  name = "grafana.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
+}
+
+resource "google_dns_record_set" "storyscript-io-api-hub" {
+  name = "api.hub.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = [google_dns_managed_zone.storyscript-io.labels.cluster_k8s_ip]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -158,6 +239,78 @@ resource "google_dns_record_set" "storyscript-io-mailgun" {
   rrdatas      = ["mailgun.org."]
 }
 
+resource "google_dns_record_set" "storyscript-io-sls" {
+  name = "sls.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = [google_dns_managed_zone.storyscript-io.dns_name]
+}
+
+resource "google_dns_record_set" "storyscript-io-status" {
+  name = "status.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = ["rvz6cbw6zrnh.stspg-customer.com."]
+}
+
+resource "google_dns_record_set" "storyscript-io-components" {
+  name = "components.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = ["storybook-asyncy.netlify.com."]
+}
+
+resource "google_dns_record_set" "storyscript-io-dashboard" {
+  name = "dashboard.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = ["storyscript-dashboard.netlify.com."]
+}
+
+resource "google_dns_record_set" "storyscript-io-dev-dashboard" {
+  name = "dev.dashboard.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = ["dev--storyscript-dashboard.netlify.com."]
+}
+
+resource "google_dns_record_set" "storyscript-io-hub" {
+  name = "hub.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = ["hub-asyncy-com.netlify.com."]
+}
+
+resource "google_dns_record_set" "storyscript-io-login" {
+  name = "login.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = ["login-asyncy.netlify.com."]
+}
+
+resource "google_dns_record_set" "storyscript-io-docs" {
+  name = "docs.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas      = ["docs-asyncy-com.netlify.com."]
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # STORYSCRIPT-IO | MX
 # ---------------------------------------------------------------------------------------------------------------------
@@ -192,6 +345,20 @@ resource "google_dns_record_set" "storyscript-io-ns" {
     "ns-cloud-a1.googledomains.com.",
     "ns-cloud-a3.googledomains.com.",
     "ns-cloud-a4.googledomains.com."
+  ]
+}
+
+resource "google_dns_record_set" "storyscript-io-studio" {
+  name = "studio.${google_dns_managed_zone.storyscript-io.dns_name}"
+  type = "NS"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.storyscript-io.name
+  rrdatas = [
+    "dns1.p06.nsone.net.",
+    "dns2.p06.nsone.net.",
+    "dns3.p06.nsone.net.",
+    "dns4.p06.nsone.net."
   ]
 }
 
