@@ -83,11 +83,20 @@ resource "google_dns_record_set" "storyscript-io-apex" {
   ttl  = 300
 
   managed_zone = "storyscript-primary"
-  rrdatas      = ["35.245.52.107"]
+  rrdatas      = ["104.198.14.52"]
 }
 
 resource "google_dns_record_set" "storyscript-io-deploy" {
   name = "deploy.storyscript.io."
+  type = "A"
+  ttl  = 300
+
+  managed_zone = "storyscript-primary"
+  rrdatas      = ["35.245.52.107"]
+}
+
+resource "google_dns_record_set" "storyscript-io-api" {
+  name = "api.storyscript.io."
   type = "A"
   ttl  = 300
 
