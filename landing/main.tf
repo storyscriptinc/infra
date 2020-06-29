@@ -23,23 +23,9 @@ provider "google" {
 # CREATE DNS RECORDS
 # ---------------------------------------------------------------------------------------------------------------------
 
-resource "google_dns_record_set" "storyscri-pt-apex" {
-  name = "storyscri.pt."
-  type = "A"
-  ttl  = 300
-
-  managed_zone = "storyscri-pt"
-  rrdatas      = ["104.198.14.52"]
-}
-
-resource "google_dns_record_set" "storyscri-pt-www" {
-  name = "www.storyscri.pt."
-  type = "CNAME"
-  ttl  = 300
-
-  managed_zone = "storyscri-pt"
-  rrdatas      = ["storyscri.pt."]
-}
+# ---------------------------------------------------------------------------------------------------------------------
+# STORYSCRIPT-COM (APEX/WWW TO WEBFLOW, * TO K8S)
+# ---------------------------------------------------------------------------------------------------------------------
 
 resource "google_dns_record_set" "storyscript-apex" {
   name = "storyscript.com."
@@ -47,7 +33,7 @@ resource "google_dns_record_set" "storyscript-apex" {
   ttl  = 300
 
   managed_zone = "storyscript-com"
-  rrdatas      = ["104.198.14.52"]
+  rrdatas      = ["13.248.155.104", "76.223.27.102"]
 }
 
 resource "google_dns_record_set" "storyscript-www" {
@@ -56,26 +42,65 @@ resource "google_dns_record_set" "storyscript-www" {
   ttl  = 300
 
   managed_zone = "storyscript-com"
-  rrdatas      = ["storyscript.com."]
+  rrdatas      = ["proxy-ssl.webflow.com."]
 }
 
+resource "google_dns_record_set" "storyscript-wildcard" {
+  name = "*.storyscript.com."
+  type = "A"
+  ttl  = 300
+
+  managed_zone = "storyscript-com"
+  rrdatas      = ["34.90.203.249"]
+}
 
 # ---------------------------------------------------------------------------------------------------------------------
-# STORYSCRIPT-IO | DNS MANAGEMENT
+# STORYSCRIPT ALIASES (POINT TO WEBFLOW)
+# ---------------------------------------------------------------------------------------------------------------------
+
+resource "google_dns_record_set" "storyscri-pt-apex" {
+  name = "storyscri.pt."
+  type = "A"
+  ttl  = 300
+
+  managed_zone = "storyscri-pt"
+  rrdatas      = ["13.248.155.104", "76.223.27.102"]
+}
+
+resource "google_dns_record_set" "storyscri-pt-www" {
+  name = "www.storyscri.pt."
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = "storyscri-pt"
+  rrdatas      = ["proxy-ssl.webflow.com."]
+}
+
+resource "google_dns_record_set" "story-ai-apex" {
+  name = "story.ai."
+  type = "A"
+  ttl  = 300
+
+  managed_zone = "story-ai"
+  rrdatas      = ["13.248.155.104", "76.223.27.102"]
+}
+
+resource "google_dns_record_set" "story-ai-www" {
+  name = "www.story.ai."
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = "story-ai"
+  rrdatas      = ["proxy-ssl.webflow.com."]
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
+# STORYSCRIPT-IO (CURRENTLY MIXED BETWEEN WEBFLOW AND THE OLD OMS CLUSTER)
 # ---------------------------------------------------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------------------------------------------------
 # STORYSCRIPT-IO | A
 # ---------------------------------------------------------------------------------------------------------------------
-
-resource "google_dns_record_set" "storyscript-io-www" {
-  name = "www.storyscript.io."
-  type = "A"
-  ttl  = 300
-
-  managed_zone = "storyscript-primary"
-  rrdatas      = ["104.198.14.52"]
-}
 
 resource "google_dns_record_set" "storyscript-io-apex" {
   name = "storyscript.io."
@@ -83,7 +108,16 @@ resource "google_dns_record_set" "storyscript-io-apex" {
   ttl  = 300
 
   managed_zone = "storyscript-primary"
-  rrdatas      = ["104.198.14.52"]
+  rrdatas      = ["13.248.155.104", "76.223.27.102"]
+}
+
+resource "google_dns_record_set" "storyscript-io-www" {
+  name = "www.storyscript.io."
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = "storyscript-primary"
+  rrdatas      = ["proxy-ssl.webflow.com."]
 }
 
 resource "google_dns_record_set" "storyscript-io-deploy" {
