@@ -85,10 +85,6 @@ resource "google_dns_record_set" "story-ai-www" {
   rrdatas      = ["proxy-ssl.webflow.com."]
 }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# STORYSCRIPT-IO
-# ---------------------------------------------------------------------------------------------------------------------
-
 resource "google_dns_record_set" "storyscript-io-apex" {
   name = "storyscript.io."
   type = "A"
