@@ -90,7 +90,7 @@ resource "google_dns_record_set" "storyscript-io-apex" {
   type = "A"
   ttl  = 300
 
-  managed_zone = "storyscript-primary"
+  managed_zone = "storyscript-io"
   rrdatas      = ["13.248.155.104", "76.223.27.102"]
 }
 
@@ -99,6 +99,6 @@ resource "google_dns_record_set" "storyscript-io-www" {
   type = "CNAME"
   ttl  = 300
 
-  managed_zone = "storyscript-primary"
+  managed_zone = "storyscript-io"
   rrdatas      = ["proxy-ssl.webflow.com."]
 }
