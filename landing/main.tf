@@ -45,15 +45,6 @@ resource "google_dns_record_set" "storyscript-www" {
   rrdatas      = ["proxy-ssl.webflow.com."]
 }
 
-resource "google_dns_record_set" "storyscript-wildcard" {
-  name = "*.storyscript.com."
-  type = "A"
-  ttl  = 300
-
-  managed_zone = "storyscript-com"
-  rrdatas      = ["34.90.203.249"]
-}
-
 # ---------------------------------------------------------------------------------------------------------------------
 # STORYSCRIPT ALIASES (POINT TO WEBFLOW)
 # ---------------------------------------------------------------------------------------------------------------------
