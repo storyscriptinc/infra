@@ -138,3 +138,19 @@ resource "google_dns_record_set" "storyscript-com-mx" {
     "10 alt4.aspmx.l.google.com."
   ]
 }
+
+
+resource "google_dns_record_set" "story-ai-mx" {
+  name = "story.ai."
+  type = "MX"
+  ttl  = 3600
+
+  managed_zone = "story-ai"
+  rrdatas = [
+    "1 aspmx.l.google.com.",
+    "5 alt1.aspmx.l.google.com.",
+    "5 alt2.aspmx.l.google.com.",
+    "10 alt3.aspmx.l.google.com.",
+    "10 alt4.aspmx.l.google.com."
+  ]
+}
