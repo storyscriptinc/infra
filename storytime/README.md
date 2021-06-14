@@ -20,8 +20,6 @@ terraform.tfvars --> Defining variables
 
 variables-auth.tf --> Application and authentication variables
 
-vm-output.tf --> Output of VMs 
-
 vm.tf --> Create 1 VM with storytime container
 
 # Notes
