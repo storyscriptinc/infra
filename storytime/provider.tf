@@ -5,15 +5,15 @@ terraform {
 }
 
 provider "google" {
-  project = var.app_project
+  project     = var.env_project
   credentials = file(var.gcp_auth_file)
-  region  = var.gcp_region_1
-  zone    = var.gcp_zone_1
+  region      = var.gcp_region_1
+  zone        = var.gcp_zone_1
 }
 
 provider "google-beta" {
-  project = var.app_project
+  project     = var.env_project
   credentials = file(var.gcp_auth_file)
-  region  = var.gcp_region_1
-  zone    = var.gcp_zone_1
+  region      = var.gcp_region_1
+  zone        = var.gcp_zone_1
 }

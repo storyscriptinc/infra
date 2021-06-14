@@ -4,9 +4,9 @@
 module "service_account" {
   source = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-service-account"
 
-  name                  = "${var.app_name}-${var.app_environment}-sm-sa"
-  project               = var.app_project
-  description           = "Storytime ${var.app_environment} service account"
+  name                  = "${var.env_name}-${var.env_subname}-sm-sa"
+  project               = var.env_project
+  description           = "Storytime ${var.env_subname} service account"
   service_account_roles = ["roles/secretmanager.secretAccessor", "roles/secretmanager.secretVersionManager"]
 }
 

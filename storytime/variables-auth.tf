@@ -7,26 +7,26 @@ variable "gcp_auth_file" {
 }
 
 # define GCP project name
-variable "app_project" {
+variable "env_project" {
   type        = string
   description = "GCP project name"
 }
 
 # define application name (storytime)
-variable "app_name" {
+variable "env_name" {
   type        = string
   description = "Application name"
   default     = "storytime"
 }
 
 # define application domain
-variable "app_domain" {
+variable "env_domain" {
   type        = string
   description = "Application domain"
 }
 
 # define application environment (prod, test, main, customer, ...)
-variable "app_environment" {
+variable "env_subname" {
   type        = string
   description = "Application environment"
 }

@@ -1,6 +1,6 @@
 # Deploying GCP VMs located in a private subnet, inside an unmanaged instance group, with a load balancer using Terraform
 
-The script will install two Ubuntu instances with Apache web server located in private subnet, without public ip, inside an unmanaged instance group, with a load balancer using Terraform.
+The script will install 1 instance with storytime docker container located in private subnet, without public ip, inside an unmanaged instance group, with a load balancer using Terraform.
 
 lb-unmanaged.tf --> Create unmanaged instance group, backend services and all components required by the load balancer 
 

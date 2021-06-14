@@ -2,7 +2,7 @@
 
 # Allow http
 resource "google_compute_firewall" "allow-http" {
-  name    = "${var.app_name}-${var.app_environment}-fw-allow-http"
+  name    = "${var.env_name}-${var.env_subname}-fw-allow-http"
   network = google_compute_network.vpc.name
   allow {
     protocol = "tcp"
@@ -13,7 +13,7 @@ resource "google_compute_firewall" "allow-http" {
 
 # # allow https
 resource "google_compute_firewall" "allow-https" {
-  name    = "${var.app_name}-${var.app_environment}-fw-allow-https"
+  name    = "${var.env_name}-${var.env_subname}-fw-allow-https"
   network = google_compute_network.vpc.name
   allow {
     protocol = "tcp"
@@ -24,7 +24,7 @@ resource "google_compute_firewall" "allow-https" {
 
 # allow ssh
 resource "google_compute_firewall" "allow-ssh" {
-  name    = "${var.app_name}-${var.app_environment}-fw-allow-ssh"
+  name    = "${var.env_name}-${var.env_subname}-fw-allow-ssh"
   network = google_compute_network.vpc.name
   allow {
     protocol = "tcp"
@@ -34,7 +34,7 @@ resource "google_compute_firewall" "allow-ssh" {
 }
 
 resource "google_compute_firewall" "allow-webhook" {
-  name    = "${var.app_name}-${var.app_environment}-fw-allow-webhook"
+  name    = "${var.env_name}-${var.env_subname}-fw-allow-webhook"
   network = google_compute_network.vpc.name
   allow {
     protocol = "tcp"
