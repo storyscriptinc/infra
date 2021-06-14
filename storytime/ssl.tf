@@ -17,8 +17,8 @@ resource "google_compute_ssl_certificate" "storytime" {
   description = "the cert for the ${var.env_subname}"
 
   // YOU WILL NEED TO GET THE CERTS ON DISK IF YOU ARE CREATING THIS RESOURCE FROM SCRATCH
-  private_key = file("/path/to/privkey.pem")
-  certificate = file("/path/to/fullchain.pem")
+  private_key = file("${var.cert_privkey}")
+  certificate = file("${var.cert_fullchain}")
 
   lifecycle {
     create_before_destroy = true
