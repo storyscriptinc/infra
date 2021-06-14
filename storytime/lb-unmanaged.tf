@@ -27,7 +27,7 @@ resource "google_compute_target_https_proxy" "target_https_proxy" {
   name             = "${var.app_name}-${var.app_environment}-https-proxy"
   project          = var.app_project
   url_map          = google_compute_url_map.url_map.self_link
-  ssl_certificates = [google_compute_ssl_certificate.storyscript-ci.id]
+  ssl_certificates = [google_compute_ssl_certificate.storytime.id]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

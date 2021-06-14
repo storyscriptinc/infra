@@ -42,7 +42,7 @@ module "gce-container" {
         name = "EXTERNAL_ADDRESS"
         // hardcoded runtime here because I went over the limit of certs generated for
         // *.storytime.storyscript-ci.com :fullmoon-with-face:
-        value = "${var.app_environment}.runtime.storyscript-ci.com"
+        value = "${var.app_environment}.runtime.${var.app_domain}"
       },
       {
         name  = "PORT"
