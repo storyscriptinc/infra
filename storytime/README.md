@@ -22,7 +22,7 @@ variables-auth.tf --> Application and authentication variables
 
 vm-output.tf --> Output of VMs 
 
-vm.tf --> Create two Ubuntu VMs with Apache web server
+vm.tf --> Create 1 VM with storytime container
 
 # Notes
 
