@@ -25,8 +25,7 @@ variable "env_domain" {
   description = "Application domain"
 }
 
-# define application environment (prod, test, main, customer, ...)
-variable "env_subname" {
+variable "env_domain_managed_zone" {
   type        = string
-  description = "Application environment"
+  description = "Name of the zone for the domain"
 }

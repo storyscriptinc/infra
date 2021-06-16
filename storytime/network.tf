@@ -2,16 +2,16 @@
 
 # create VPC
 resource "google_compute_network" "vpc" {
-  name                    = "${var.env_name}-${var.env_subname}-vpc"
+  name                    = "${var.env_name}-${terraform.workspace}-vpc"
   auto_create_subnetworks = "false"
   routing_mode            = "GLOBAL"
 }
 
 # create private subnet
 resource "google_compute_subnetwork" "private_subnet_1" {
-  provider      = "google-beta"
+  provider      = google-beta
   purpose       = "PRIVATE"
-  name          = "${var.env_name}-${var.env_subname}-private-subnet-1"
+  name          = "${var.env_name}-${terraform.workspace}-private-subnet-1"
   ip_cidr_range = var.private_subnet_cidr_1
   network       = google_compute_network.vpc.name
   region        = var.gcp_region_1
@@ -19,14 +19,14 @@ resource "google_compute_subnetwork" "private_subnet_1" {
 
 # create a public ip for nat service
 resource "google_compute_address" "nat_ip" {
-  name    = "${var.env_name}-${var.env_subname}-nap-ip"
+  name    = "${var.env_name}-${terraform.workspace}-nap-ip"
   project = var.env_project
   region  = var.gcp_region_1
 }
 
 # create a nat to allow private instances connect to internet
 resource "google_compute_router" "nat-router" {
-  name    = "${var.env_name}-${var.env_subname}-nat-router"
+  name    = "${var.env_name}-${terraform.workspace}-nat-router"
   network = google_compute_network.vpc.name
 }
 
@@ -39,14 +39,9 @@ resource "google_compute_router_nat" "nat-gateway" {
   depends_on                         = [google_compute_address.nat_ip]
 }
 
-# show nat ip address
-output "nat_ip_address" {
-  value = google_compute_address.nat_ip.address
-}
-
 # allow internal icmp
 resource "google_compute_firewall" "allow-internal" {
-  name    = "${var.env_name}-${var.env_subname}-fw-allow-internal"
+  name    = "${var.env_name}-${terraform.workspace}-fw-allow-internal"
   network = google_compute_network.vpc.name
   allow {
     protocol = "icmp"
