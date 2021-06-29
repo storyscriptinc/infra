@@ -6,6 +6,13 @@ terraform {
     bucket = "storyscript-ci-terraform"
     prefix = "pages-ci-terraform-state"
   }
+
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "3.74.0"
+    }
+  }
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -14,14 +21,12 @@ terraform {
 
 provider "google" {
   credentials = var.credentials
-  version     = "~> 3.4.0"
   project     = "storyscript-ci"
   region      = "us-east4"
 }
 
 provider "google-beta" {
   credentials = var.credentials
-  version     = "~> 3.4.0"
   project     = "storyscript-ci"
   region      = "us-east4"
 }
@@ -32,18 +37,18 @@ provider "google-beta" {
 
 module "load-balancer_http-load-balancer" {
   source  = "gruntwork-io/load-balancer/google//modules/http-load-balancer"
-  version = "0.2.0"
-  project     = "storyscript-ci"
-  name                  = "pages-ci"
-  url_map               = google_compute_url_map.urlmap.self_link
+  version = "0.4.0"
+  project = "storyscript-ci"
+  name    = "pages-ci"
+  url_map = google_compute_url_map.urlmap.self_link
 
   enable_ssl = true
 
-  create_dns_entries = true
+  create_dns_entries    = true
   dns_managed_zone_name = "storyscript-ci"
-  custom_domain_names = ["pages-ci.storyscript-ci.com"]
+  custom_domain_names   = ["pages-ci.storyscript-ci.com"]
 
-  enable_http = false
+  enable_http      = false
   ssl_certificates = [google_compute_ssl_certificate.storyscript-ci.self_link]
 }
 
@@ -70,8 +75,8 @@ resource "google_compute_ssl_certificate" "storyscript-ci" {
   description = "the cert for storyscript-ci.com and subdomains"
 
   // YOU WILL NEED TO GET THE CERTS ON DISK IF YOU ARE CREATING THIS RESOURCE FROM SCRATCH
-  private_key = file("/tmp/privkey.pem")
-  certificate = file("/tmp/cacert.pem")
+  private_key = file(var.cert_privkey)
+  certificate = file(var.cert_fullchain)
 
   lifecycle {
     create_before_destroy = true
@@ -104,8 +109,8 @@ resource "google_compute_url_map" "urlmap" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "google_storage_bucket" "storyscript_pages_ci" {
-  name     = "storyscript-pages-ci-artifacts"
-  location = "EU"
+  name          = "storyscript-pages-ci-artifacts"
+  location      = "EU"
   storage_class = "STANDARD"
 
   // true = Destroys bucket even if there are objects in it
@@ -120,7 +125,7 @@ resource "google_storage_bucket" "storyscript_pages_ci" {
 
 resource "google_storage_bucket_iam_binding" "pages-ci-binding" {
   bucket = google_storage_bucket.storyscript_pages_ci.name
-  role = "roles/storage.objectViewer"
+  role   = "roles/storage.objectViewer"
   members = [
     "allUsers",
   ]
@@ -131,6 +136,11 @@ resource "google_compute_backend_bucket" "pages-ci" {
   description = "Serves artifacts built by pages-ci"
   bucket_name = google_storage_bucket.storyscript_pages_ci.name
   enable_cdn  = false
+
+  custom_response_headers = [
+    "Cross-Origin-Embedder-Policy: require-corp",
+    "Cross-Origin-Opener-Policy: same-origin"
+  ]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -138,8 +148,8 @@ resource "google_compute_backend_bucket" "pages-ci" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 module "gke_service_account" {
-  source = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-service-account"
-  project     = "storyscript-ci"
+  source  = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-service-account"
+  project = "storyscript-ci"
 
   name                  = "pages-ci-gh-action-sa"
   description           = "pages ci gh action service account"
@@ -157,5 +167,6 @@ resource "google_service_account_key" "pages-ci-gh-actions" {
 output "service_account_key" {
   description = "Account key to provide to GitHub actions"
   value       = base64decode(google_service_account_key.pages-ci-gh-actions.private_key)
+  sensitive   = true
 }
 

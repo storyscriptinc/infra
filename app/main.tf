@@ -7,6 +7,13 @@ terraform {
       name = "story-ai-app"
     }
   }
+
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "3.74.0"
+    }
+  }
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -90,8 +97,8 @@ resource "google_compute_url_map" "story-ai-app" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "google_storage_bucket" "story-ai-app" {
-  name     = "story-ai-app"
-  location = "EU"
+  name          = "story-ai-app"
+  location      = "EU"
   storage_class = "STANDARD"
 
   // true = Destroys bucket even if there are objects in it
@@ -105,7 +112,7 @@ resource "google_storage_bucket" "story-ai-app" {
 
 resource "google_storage_bucket_iam_binding" "story-ai-app" {
   bucket = google_storage_bucket.story-ai-app.name
-  role = "roles/storage.objectViewer"
+  role   = "roles/storage.objectViewer"
   members = [
     "allUsers",
   ]
@@ -116,6 +123,11 @@ resource "google_compute_backend_bucket" "story-ai-app" {
   description = "Serves the stable app.story.ai resource"
   bucket_name = google_storage_bucket.story-ai-app.name
   enable_cdn  = false
+
+  custom_response_headers = [
+    "Cross-Origin-Embedder-Policy: require-corp",
+    "Cross-Origin-Opener-Policy: same-origin"
+  ]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -123,8 +135,8 @@ resource "google_compute_backend_bucket" "story-ai-app" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 module "gke_service_account" {
-  source = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-service-account"
-  project     = "storyscript"
+  source  = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-service-account"
+  project = "storyscript"
 
   name                  = "story-ai-gh-action-sa"
   description           = "story ai gh action service account"
