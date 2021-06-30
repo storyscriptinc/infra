@@ -5,7 +5,18 @@ $> terrafrom login
 
 $> terraform init
 
-$> TV_VAR_env_project="storyscript-ci" TF_VAR_env_domain="storyscript-ci.com" TF_VAR_env_domain_managed_zone="storyscript-ci" TF_VAR_name="storytime" TF_VAR_gcp_region_1="europe-west2" TF_VAR_zone_1="europe-west2-c" TF_VAR_gcp_auth_file="./terraformer.json" TF_VAR_private_subnet_cidr_1="10.10.1.0/24" TF_VAR_cert_privkey="/path/to/file.pem" TF_VAR_cert_fullchain="path/to/file.pem" terraform plan/apply
+$> TV_VAR_env_project="storyscript-ci" \
+TF_VAR_env_domain="storyscript-ci.com" \
+TF_VAR_env_domain_managed_zone="storyscript-ci" \
+TF_VAR_env_name="storytime" \
+TF_VAR_gcp_region_1="europe-west2" \
+TF_VAR_gcp_zone_1="europe-west2-c" \
+TF_VAR_gcp_auth_file="./terraformer.json" \
+TF_VAR_private_subnet_cidr_1="10.10.1.0/24" \
+TF_VAR_passphrase="passwd-for-runtime-auth" \
+TF_VAR_cert_privkey="/path/to/file.pem" \
+TF_VAR_cert_fullchain="path/to/file.pem" \
+terraform plan
 
 # At this point it will either target the proper workspace (if set before), or ask you to choose one from TFCloud
 
