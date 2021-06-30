@@ -19,6 +19,11 @@ variable "env_name" {
   default     = "storytime"
 }
 
+variable "env_passphrase" {
+  type        = string
+  description = "Auth passphrase"
+}
+
 # define application domain
 variable "env_domain" {
   type        = string
