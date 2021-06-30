@@ -47,6 +47,10 @@ module "gce-container" {
       {
         name  = "PORT"
         value = "80"
+      },
+      {
+        name  = "MVP_PASSPHRASE"
+        value = var.env_passphrase
       }
     ]
   }
