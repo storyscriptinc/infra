@@ -19,6 +19,12 @@ variable "env_name" {
   default     = "storytime"
 }
 
+variable "env_deploy_name" {
+  type        = string
+  description = "Deploy name"
+  default     = "will"
+}
+
 variable "env_passphrase" {
   type        = string
   description = "Auth passphrase"
