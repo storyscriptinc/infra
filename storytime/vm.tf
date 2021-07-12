@@ -3,10 +3,10 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "google_compute_instance" "web_private_1" {
-  name         = "${var.env_name}-${terraform.workspace}-vm1"
+  name         = "${var.env_name}-${var.env_deploy_name}-vm1"
   machine_type = "f1-micro"
   zone         = var.gcp_zone_1
-  hostname     = "${var.env_name}-${terraform.workspace}-vm1.${var.env_domain}"
+  hostname     = "${var.env_name}-${var.env_deploy_name}-vm1.${var.env_domain}"
 
 
   boot_disk {
@@ -42,7 +42,7 @@ module "gce-container" {
         name = "EXTERNAL_ADDRESS"
         // hardcoded runtime here because I went over the limit of certs generated for
         // *.storytime.storyscript-ci.com :fullmoon-with-face:
-        value = "${terraform.workspace}.runtime.${var.env_domain}"
+        value = "${var.env_deploy_name}.runtime.${var.env_domain}"
       },
       {
         name  = "PORT"
