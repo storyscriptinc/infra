@@ -29,23 +29,45 @@ provider "google-beta" {
 # CREATE LOAD BALANCER
 # ---------------------------------------------------------------------------------------------------------------------
 
-module "load-balancer_http-load-balancer" {
-  source  = "gruntwork-io/load-balancer/google//modules/http-load-balancer"
-  version = "0.4.0"
-  project = "storyscript"
-  name    = "story-ai-app"
+resource "google_compute_global_address" "default" {
+  name         = "story-ai-app"
+  ip_version   = "IPV4"
+  address_type = "EXTERNAL"
+}
+
+# ------------------------------------------------------------------------------
+# CREATE FORWARDING RULE AND PROXY FOR HTTPS
+# ------------------------------------------------------------------------------
+
+resource "google_compute_global_forwarding_rule" "https" {
+  provider   = google-beta
+  name       = "story-ai-app-https-rule"
+  target     = google_compute_target_https_proxy.default.self_link
+  ip_address = google_compute_global_address.default.address
+  port_range = "443"
+  depends_on = [google_compute_global_address.default]
+}
+
+resource "google_compute_target_https_proxy" "default" {
+  name    = "story-ai-app-https-proxy"
   url_map = google_compute_url_map.story-ai-app.self_link
 
-  enable_ssl = true
-
-  create_dns_entries    = true
-  dns_managed_zone_name = "story-ai"
-  custom_domain_names   = ["app.story.ai"]
-
-  enable_http      = false
   ssl_certificates = [google_compute_ssl_certificate.story-ai-app.self_link]
 }
 
+# ------------------------------------------------------------------------------
+# CREATE A RECORD POINTING TO THE PUBLIC IP OF THE CLB
+# ------------------------------------------------------------------------------
+
+resource "google_dns_record_set" "dns" {
+  name = "app.story.ai."
+  type = "A"
+  ttl = 300
+
+  managed_zone = "story-ai"
+
+  rrdatas = [google_compute_global_address.default.address]
+}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # CREATE SSL CERT
