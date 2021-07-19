@@ -51,6 +51,10 @@ module "gce-container" {
       {
         name  = "MVP_PASSPHRASE"
         value = var.env_passphrase
+      },
+      {
+        name  = "ONE_GCP_SECRET_NAME"
+        value = "creds_${var.env_deploy_name}"
       }
     ]
   }
